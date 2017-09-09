@@ -4,57 +4,41 @@ import { updateProfile } from '../../actions/profileActions';
 import { viewProfile } from '../../actions/profileActions';
 import TextFieldGroup from '../common/TextFieldGroup';
 import jwtDecode from 'jwt-decode';
-import Input from 'react-placeholder-support';
 
 class EditProfileForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      vProfile: {},
       about: '',
-      location: '',
       photo: '',
+      location: '',
     };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-
-
   }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
-
   }
 
   onSubmit(e) {
     e.preventDefault();
     var decoded = jwtDecode(localStorage['jwtToken']);
-    this.props.updateProfile(this.state, decoded.id).then(() => {
+    console.log(decoded);
 
-      this.props.addFlashMessage({
-        type: 'success',
-        text: 'Your profile was updated successfully'
-      });
-      this.context.router.push('/profile');
+    this.props.updateProfile(this.state, decoded.id).then(() => {
+      console.log(this.context);
+      this.context.router.push('/')
     }
     );
   }
 
 
-  componentWillMount() {
-    var decoded = jwtDecode(localStorage['jwtToken']);
-    viewProfile(this.state, decoded.id)
-      .then(res => {
-        console.log(res.data);
-        this.setState({ vProfile: res.data })
-      });
-  }
 
-  
   render() {
     const { about, photo, location } = this.state;
-    const { vProfile } = this.state;
+
     return (
       <form onSubmit={this.onSubmit}>
         <h1>Update Your Profile</h1>
@@ -65,7 +49,6 @@ class EditProfileForm extends React.Component {
           name="about"
           value={about}
           onChange={this.onChange}
-
         />
 
         <TextFieldGroup
@@ -74,7 +57,6 @@ class EditProfileForm extends React.Component {
           name="photo"
           value={photo}
           onChange={this.onChange}
-
         />
 
         <TextFieldGroup
@@ -83,7 +65,6 @@ class EditProfileForm extends React.Component {
           name="location"
           value={location}
           onChange={this.onChange}
-
         />
 
         <button type="submit" className="btn btn-primary">Update Profile</button>

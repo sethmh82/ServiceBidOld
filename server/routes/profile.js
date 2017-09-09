@@ -3,14 +3,27 @@ import db from '../models';
 
 let router = express.Router();
 
-router.get('/:id', (req, res) => {
+//GET USER PROFILE
 
-  db.users.findById(req.params.id).then(user => {
-    console.log("sjhjfkhsf",user);
-      res.json(user.dataValues);
+router.get('/:id', (req, res) => {
+  vProfile = db.users.findAll({
+
+      where: {
+        id: {
+          $eq: req.params.id
+        }
+      }
+
+
+    }).then(user => {
+      res.send(
+        
+        { users }
      
+      );
     });
 });
+
 
 router.post('/:id', (req, res) => {
   console.log(req.params.id);
@@ -28,6 +41,7 @@ router.post('/:id', (req, res) => {
           $eq: req.params.id
         }
       }
+
 
     }).then(user => {
       res.end();
