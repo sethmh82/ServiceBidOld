@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createEvent } from '../../actions/eventActions';
 import TextFieldGroup from '../common/TextFieldGroup';
-import jwtDecode from 'jwt-decode';
 
 class EventForm extends React.Component {
   constructor(props) {
@@ -23,10 +22,7 @@ class EventForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    var decoded = jwtDecode(localStorage['jwtToken']);
-    this.props.createEvent(this.state, decoded.id).then(() => {
-      this.context.router.push('/new-event');
-    });
+    this.props.createEvent(this.state);
   }
 
   render() {
@@ -53,10 +49,6 @@ class EventForm extends React.Component {
 
 EventForm.propTypes = {
   createEvent: React.PropTypes.func.isRequired
-}
-
-EventForm.contextTypes = {
-  router: React.PropTypes.object.isRequired
 }
 
 export default connect(null, { createEvent })(EventForm);

@@ -24,11 +24,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     location: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     servicesList: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     about: {
         type: DataTypes.STRING,

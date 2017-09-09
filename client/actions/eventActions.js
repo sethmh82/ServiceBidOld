@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-
-export function createEvent(event, id) {
+export function createEvent(event) {
   return dispatch => {
-    return axios.post(`/api/events/${id}`, event);
+    return axios.post('/api/events', event);
   };
 }
-

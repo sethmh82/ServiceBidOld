@@ -1,12 +1,9 @@
 import React from 'react';
-import occupations from '../../data/occupations';
+import timezones from '../../data/timezones';
 import map from 'lodash/map';
 import classnames from 'classnames';
 import validateInput from '../../../server/shared/validations/signup';
 import TextFieldGroup from '../common/TextFieldGroup';
-import PlacesAutocomplete from 'react-places-autocomplete';
-
-
 
 class SignupForm extends React.Component {
   constructor(props) {
@@ -16,26 +13,18 @@ class SignupForm extends React.Component {
       email: '',
       password: '',
       passwordConfirmation: '',
-      occupation:'',
       errors: {},
-      address: '',
-      loading: false,
       isLoading: false,
       invalid: false
     }
 
-    this.handleChange = this.handleChange.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.checkUserExists = this.checkUserExists.bind(this);
-    this.onChange = (address) => this.setState({ address });
-    
   }
 
-
-
-  handleChange(e) {
+  onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
-    
   }
 
   isValid() {
@@ -43,7 +32,6 @@ class SignupForm extends React.Component {
 
     if (!isValid) {
       this.setState({ errors });
-      console.log(data);
     }
 
     return isValid;
@@ -88,21 +76,6 @@ class SignupForm extends React.Component {
 
   render() {
     const { errors } = this.state;
-    const options = map(occupations, (val, key) =>
-      <option key={val} value={val}>{key}</option>
-    );
-    const inputProps = {
-      value: this.state.address,
-      onChange: this.onChange
-    }
-    const cssClasses = {
-      root: 'form-group',
-      input: 'form-control',
-      autocompleteContainer: 'my-autocomplete-container'
-    }
-    const AutocompleteItem = ({ suggestion }) => (<div><i className="fa fa-map-marker"/>{suggestion}</div>)
-
-
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -111,7 +84,7 @@ class SignupForm extends React.Component {
         <TextFieldGroup
           error={errors.username}
           label="Username"
-          onChange={this.handleChange}
+          onChange={this.onChange}
           checkUserExists={this.checkUserExists}
           value={this.state.username}
           field="username"
@@ -120,7 +93,7 @@ class SignupForm extends React.Component {
         <TextFieldGroup
           error={errors.email}
           label="Email"
-          onChange={this.handleChange}
+          onChange={this.onChange}
           checkUserExists={this.checkUserExists}
           value={this.state.email}
           field="email"
@@ -129,7 +102,7 @@ class SignupForm extends React.Component {
         <TextFieldGroup
           error={errors.password}
           label="Password"
-          onChange={this.handleChange}
+          onChange={this.onChange}
           value={this.state.password}
           field="password"
           type="password"
@@ -138,39 +111,11 @@ class SignupForm extends React.Component {
         <TextFieldGroup
           error={errors.passwordConfirmation}
           label="Password Confirmation"
-          onChange={this.handleChange}
+          onChange={this.onChange}
           value={this.state.passwordConfirmation}
           field="passwordConfirmation"
           type="password"
         />
-
-
-        <div>
-        <label className="control-label">Location</label>
-        <PlacesAutocomplete 
-          inputProps={inputProps}
-          autocompleteItem={AutocompleteItem} 
-          classNames={cssClasses}
-          field='address'
-        />
-        </div>
-
-
-
-        
-        <div className={classnames("form-group", { 'has-error': errors.occupation })}>
-          <label className="control-label">Occupation</label>
-          <select
-            className="form-control"
-            name="occupation"
-            onChange={this.handleChange}
-            value={this.state.occupation}
-          >
-            <option value="" disabled>Choose Your Occupation</option>
-            {options}
-          </select>
-          {errors.occupation && <span className="help-block">{errors.occupation}</span>}
-        </div>
 
 
 

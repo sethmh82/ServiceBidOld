@@ -71,7 +71,7 @@ router.get('/:identifier', (req, res) => {
 router.post('/', (req, res) => {
   validateInput(req.body, commonValidations).then(({ errors, isValid }) => {
     if (isValid) {
-      const { username, password, email, address, occupation } = req.body;
+      const { username, password, email } = req.body;
       const password_digest = bcrypt.hashSync(password, 10);
 
 
@@ -79,9 +79,7 @@ router.post('/', (req, res) => {
         db.users.create({
             username: username,
             email: email,
-            password_digest: password_digest,
-            location: address,
-            servicesList: occupation
+            password_digest: password_digest
         }).then(user => res.json({ success: true }))
           .catch(err => res.status(500).json({ error: err }));
 

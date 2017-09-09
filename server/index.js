@@ -4,7 +4,7 @@ import Sequelize from 'sequelize';
 import bodyParser from 'body-parser';
 
 var PORT = process.env.PORT || 3000;
-var env  = process.env.NODE_ENV || 'test';
+var env       = process.env.NODE_ENV || 'production';
 
 
 var config = require(path.join(__dirname, 'config', 'config.json'))[env];
@@ -34,7 +34,7 @@ app.use('/api/auth', auth);
 app.use('/api/events', events);
 
 
-app.use('/api/profile', profile);
+app.use('/api/:id', profile);
 
 const compiler = webpack(webpackConfig);
 

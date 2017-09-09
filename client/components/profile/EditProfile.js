@@ -1,9 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { updateProfile } from '../../actions/profileActions';
-import { viewProfile } from '../../actions/profileActions';
 import TextFieldGroup from '../common/TextFieldGroup';
-import jwtDecode from 'jwt-decode';
 
 class EditProfileForm extends React.Component {
   constructor(props) {
@@ -12,6 +10,8 @@ class EditProfileForm extends React.Component {
       about: '',
       photo: '',
       location: '',
+      errors: {},
+      isLoading: false
     };
 
     this.onChange = this.onChange.bind(this);
@@ -24,20 +24,11 @@ class EditProfileForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    var decoded = jwtDecode(localStorage['jwtToken']);
-    console.log(decoded);
-
-    this.props.updateProfile(this.state, decoded.id).then(() => {
-      console.log(this.context);
-      this.context.router.push('/')
-    }
-    );
+    this.props.UpdateProfile(this.state);
   }
 
-
-
   render() {
-    const { about, photo, location } = this.state;
+    const { about, photo, location, errors, isLoading } = this.state;
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -49,22 +40,26 @@ class EditProfileForm extends React.Component {
           name="about"
           value={about}
           onChange={this.onChange}
+          error={errors.about}
         />
 
-        <TextFieldGroup
+         <TextFieldGroup
           field="photo"
           label="Photo URL"
           name="photo"
           value={photo}
           onChange={this.onChange}
+          error={errors.photo}
         />
 
-        <TextFieldGroup
+
+         <TextFieldGroup
           field="location"
           label="My Location"
           name="location"
           value={location}
           onChange={this.onChange}
+          error={errors.location}
         />
 
         <button type="submit" className="btn btn-primary">Update Profile</button>
@@ -74,8 +69,8 @@ class EditProfileForm extends React.Component {
 }
 
 
-EditProfileForm.contextTypes = {
-  router: React.PropTypes.object.isRequired
+EditProfileForm.propTypes = {
+  updateProfile: React.PropTypes.func.isRequired
 }
 
 export default connect(null, { updateProfile })(EditProfileForm);
