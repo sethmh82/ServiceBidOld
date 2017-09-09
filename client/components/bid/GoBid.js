@@ -16,7 +16,6 @@ class GoBid extends React.Component {
       loading: false,
       isLoading: false,
       invalid: false,
-      chosenProject:null,
       results: []
     }
 
@@ -25,15 +24,6 @@ class GoBid extends React.Component {
   }
 
 
-
-  // componentDidUpdate(prevProps, prevState){
-  //   let data = {};
-  //   data.id = this.state.chosenProject.id;
-  //   data.category = this.state.chosenProject.category;
-  //   data.description = this.state.chosenProject.description;
-  //   data.userId =this.state.chosenProject.userId;
-  //   console.log(data);
-  // }
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -53,15 +43,6 @@ class GoBid extends React.Component {
 
 
   }
-
-  handleClick(e) {
-    // this.setState({ chosenProject: {}});
-    this.setState({ chosenProject: e});
-    console.log(this.state.chosenProject);
-
-  }
-
-
 
   render() {
 
@@ -105,9 +86,7 @@ class GoBid extends React.Component {
         {
           map(this.state.results, (project, i) =>
 
-            <div key={i} className="alert alert-info" role="alert"><h3 className='articleHeadline'><span className="label label-danger">{++i}</span>
-            <strong> {project.projectName} </strong><span className="badge">
-            <button onClick={() => this.handleClick(project)} type="submit" className="btn-right btn-danger navbar-btn" formMethod="post">View Project</button></span></h3></div>
+            <div key={i} className="alert alert-info" role="alert"><h3 className='articleHeadline'><span className="label label-danger">{++i}</span><strong> {project.projectName}</strong><span className="badge"><button type="submit" className="btn-right btn-danger navbar-btn" formMethod="post">Save!</button></span></h3></div>
 
           )
         }

@@ -9,20 +9,7 @@ router.post('/:id', (req, res) => {
 
     db.projects.findAll({
         where: {
-            $and: [
-                 
-                {
-                    category: {
-                      $eq: category
-                    }
-                  },
-                  {
-                    completed: {
-                      $eq: false
-                    }
-                  }
-            ]
-                
+            category : category
         }
     }).then(projects => {
       res.json({ projects });

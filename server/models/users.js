@@ -19,27 +19,27 @@ module.exports = function(sequelize, DataTypes) {
         },
         photo: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: false
         },
         location: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: false
         },
         servicesList: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: false
         },
         about: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: false
         },
         myRating: {
             type: DataTypes.INTEGER,
-            allowNull: true
+            allowNull: false
         },
         myReviews: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: false
         },
     }); 
 

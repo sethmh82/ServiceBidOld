@@ -1,6 +1,9 @@
 module.exports = function(sequelize, DataTypes) {
     var projects = sequelize.define("projects", {
-
+        authorID: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
         projectName: {
             type: DataTypes.STRING,
             allowNull: false
@@ -11,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
         },        
         description: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },        
         location: {
             type: DataTypes.STRING,
