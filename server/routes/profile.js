@@ -1,32 +1,52 @@
 import express from 'express';
-import commonValidations from '../shared/validations/signup';
-import bcrypt from 'bcrypt';
-import isEmpty from 'lodash/isEmpty';
-import authenticate from '../middlewares/authenticate';
-
 import db from '../models';
 
-let router = express.Router(); 
+let router = express.Router();
 
-//AUTHENTICATE USER
-router.post('/*', authenticate, (req, res) => {
-  res.status(201).json({ success: true });
-  res.render("heyyy");
+//GET USER PROFILE
+
+router.get('/:id', (req, res) => {
+  vProfile = db.users.findAll({
+
+      where: {
+        id: {
+          $eq: req.params.id
+        }
+      }
+
+
+    }).then(user => {
+      res.send(
+        
+        { users }
+     
+      );
+    });
 });
 
 
-router.get('/:id', (req, res) => {
-    db.users.findOne({
-        where: {
-                id: {
-                  $eq: req.params.id
-                }
-              },   
-    logging: console.log }).then(user => {
-      res.json({ user });
-      });
+router.post('/:id', (req, res) => {
+  console.log(req.params.id);
+
+  const { about, photo, location } = req.body;
+
+  db.users.update({
+    about: about,
+    photo: photo,
+    location: location
+  },
+    {
+      where: {
+        id: {
+          $eq: req.params.id
+        }
+      }
+
+
+    }).then(user => {
+      res.end();
+    });
 
 });
 
 export default router;
-
