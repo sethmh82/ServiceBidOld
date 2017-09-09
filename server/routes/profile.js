@@ -3,8 +3,6 @@ import db from '../models';
 
 let router = express.Router();
 
-//GET USER PROFILE
-
 router.get('/:id', (req, res) => {
 
   db.users.findById(req.params.id).then(user => {
@@ -13,7 +11,6 @@ router.get('/:id', (req, res) => {
      
     });
 });
-
 
 router.post('/:id', (req, res) => {
   console.log(req.params.id);
@@ -31,7 +28,6 @@ router.post('/:id', (req, res) => {
           $eq: req.params.id
         }
       }
-
 
     }).then(user => {
       res.end();

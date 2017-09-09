@@ -13,7 +13,7 @@ class EditProfileForm extends React.Component {
       vProfile: {},
       about: '',
       location: '',
-      photo: ''  
+      photo: '',
     };
 
     this.onChange = this.onChange.bind(this);
@@ -22,13 +22,9 @@ class EditProfileForm extends React.Component {
 
   }
 
-  //onFocus(e) {
-  //  this.setState({ [e.target.value]: e.target.defv });
-  //}
-  
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
-    //this.setState({ [e.target.value]: e.target.value });
+
   }
 
   onSubmit(e) {
@@ -70,7 +66,7 @@ class EditProfileForm extends React.Component {
           value={about}
           defaultValue={vProfile.about}
           onChange={this.onChange}
-         // onFocus={this.onFocus}
+
         />
 
         <TextFieldGroup
@@ -80,7 +76,7 @@ class EditProfileForm extends React.Component {
           value={photo}
           defaultValue={vProfile.photo}
           onChange={this.onChange}
-       //   onFocus={this.onFocus}
+
         />
 
         <TextFieldGroup
@@ -90,7 +86,7 @@ class EditProfileForm extends React.Component {
           value={location}
           defaultValue={vProfile.location}
           onChange={this.onChange}
-         // onFocus={this.onFocus}
+
         />
 
         <button type="submit" className="btn btn-primary">Update Profile</button>
