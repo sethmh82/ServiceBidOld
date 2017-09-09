@@ -1,50 +1,45 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { updateProfile } from '../../actions/profileActions';
 import { viewProfile } from '../../actions/profileActions';
+import TextFieldGroup from '../common/TextFieldGroup';
 import jwtDecode from 'jwt-decode';
-
 
 class ViewProfileForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            vProfile: {},
+            myProfile: '',
+            vProfile: '',
         };
+
+        this.onLoad = this.onLoad.bind(this);
     }
 
+ 
 
-    componentWillMount() {
+    onLoad(e) {
       
         var decoded = jwtDecode(localStorage['jwtToken']);
-        viewProfile(this.state, decoded.id)
-            .then(res => {
-            console.log(res.data);
-            this.setState({ vProfile: res.data })
-          });
+        console.log(decoded);
+        
+        this.props.viewProfile(this.state, vProfile).then(() => {
+            console.log(vProfile);
+           // this.context.router.push('/')
+        }
+        );
     }
 
     render() {
+        console.log(vProfile);
         const { vProfile } = this.state;
 
         return (
             <div>
-                <h1>{vProfile.username}</h1>
-                <img width="300px" src={vProfile.photo}/>
-                <hr />
-                <h2>ABOUT</h2>
-                {vProfile.about}
-                <hr />
-                <h2>LOCATION</h2>
-                {vProfile.location}
-                <hr />
-                <h2>LIST OF SERVICES</h2>
-                {vProfile.servicesList}
-                <hr />
-                <h2>MY RATING</h2>
-                {vProfile.myRating}
-                <hr />
-                <h2>MY REVIEWS</h2>
-                {vProfile.myReviews}
+                <h1>My Profile</h1>
+                {this.state.about}
+                {this.photo}
+                {this.location}
                 <hr />
             </div>
 
