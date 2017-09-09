@@ -25,10 +25,7 @@ import profile from './routes/profile';
 
 let app = express();
 
-
-
 app.use(bodyParser.json());
-
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/events', events);
