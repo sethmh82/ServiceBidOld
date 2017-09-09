@@ -5,13 +5,16 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: true
         }
     });
+
     bids.associate = function (models) {
+
         bids.belongsTo(models.projects, {
             as: 'projectKey',
             foreignKey: {
                 allowNull: false
             }
         });
+        
         bids.belongsTo(models.users, {
             as: 'usersKey',
             foreignKey: {
