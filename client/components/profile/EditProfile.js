@@ -64,7 +64,6 @@ class EditProfileForm extends React.Component {
           label="About Me"
           name="about"
           value={about}
-          defaultValue={vProfile.about}
           onChange={this.onChange}
 
         />
@@ -74,7 +73,6 @@ class EditProfileForm extends React.Component {
           label="Photo URL"
           name="photo"
           value={photo}
-          defaultValue={vProfile.photo}
           onChange={this.onChange}
 
         />
@@ -84,7 +82,6 @@ class EditProfileForm extends React.Component {
           label="My Location"
           name="location"
           value={location}
-          defaultValue={vProfile.location}
           onChange={this.onChange}
 
         />

@@ -16,7 +16,7 @@ class ProfilePage extends React.Component {
           <ViewProfileForm />
           <div className="payment">
             <h3>Pay This Person</h3>
-           <CheckoutApp />
+         
            </div>
         </div>
         <div className="col-md-12">
