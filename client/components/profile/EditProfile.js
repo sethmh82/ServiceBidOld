@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { updateProfile } from '../../actions/profileActions';
+import { viewProfile } from '../../actions/profileActions';
 import TextFieldGroup from '../common/TextFieldGroup';
+import jwtDecode from 'jwt-decode';
 
 class EditProfileForm extends React.Component {
   constructor(props) {
@@ -9,7 +11,7 @@ class EditProfileForm extends React.Component {
     this.state = {
       about: '',
       photo: '',
-      location: '',
+      location: ''
     };
 
     this.onChange = this.onChange.bind(this);
@@ -22,13 +24,17 @@ class EditProfileForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.props.UpdateProfile(this.state).then(
-    this.context.router.push('/')
+    var decoded = jwtDecode(localStorage['jwtToken']);
+    console.log(decoded);
+
+    this.props.updateProfile(this.state, decoded.id).then(() => {
+      console.log(this.context);
+      this.context.router.push('/')
+    }
     );
   }
 
 
-  
 
   render() {
     const { about, photo, location } = this.state;
@@ -43,26 +49,22 @@ class EditProfileForm extends React.Component {
           name="about"
           value={about}
           onChange={this.onChange}
-   
         />
 
-         <TextFieldGroup
+        <TextFieldGroup
           field="photo"
           label="Photo URL"
           name="photo"
           value={photo}
           onChange={this.onChange}
-       
         />
 
-
-         <TextFieldGroup
+        <TextFieldGroup
           field="location"
           label="My Location"
           name="location"
           value={location}
           onChange={this.onChange}
-    
         />
 
         <button type="submit" className="btn btn-primary">Update Profile</button>
@@ -72,6 +74,8 @@ class EditProfileForm extends React.Component {
 }
 
 
-
+EditProfileForm.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
 
 export default connect(null, { updateProfile })(EditProfileForm);

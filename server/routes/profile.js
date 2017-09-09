@@ -1,67 +1,42 @@
 import express from 'express';
-import commonValidations from '../shared/validations/signup';
-import bcrypt from 'bcrypt';
-import isEmpty from 'lodash/isEmpty';
-import authenticate from '../middlewares/authenticate';
-import jwt from 'jsonwebtoken';
-import config from '../config';
 import db from '../models';
 
-let router = express.Router(); 
+let router = express.Router();
 
-//AUTHENTICATE USER
+//GET USER PROFILE
 
+router.get('/:id', (req, res) => {
 
-
-router.get('/', (req, res) => {
-    db.users.findOne({
-        where: {
-                id: {
-                  $eq: req.params.id
-                }
-              },   
-    logging: console.log }).then(user => {
-      res.json({ user });
-      });
-
+  db.users.findById(req.params.id).then(user => {
+    console.log("sjhjfkhsf",user);
+      res.json(user.dataValues);
+     
+    });
 });
 
 
-router.post('/', (req, res) => {
+router.post('/:id', (req, res) => {
+  console.log(req.params.id);
 
-      const { about, photo, location, identifier } = req.body;
-      
+  const { about, photo, location } = req.body;
 
-           db.users.update({
-             where: {
-               id: {
-                 $eq: identifier
-               },
-                  about: about,
-                  photo: photo,
-                  location: location
-             }
-}).then(() => {})
-
-});
+  db.users.update({
+    about: about,
+    photo: photo,
+    location: location
+  },
+    {
+      where: {
+        id: {
+          $eq: req.params.id
+        }
+      }
 
 
-router.post('/', (req, res) => {
+    }).then(user => {
+      res.end();
+    });
 
-      const { about, photo, location, identifier } = req.body;
-           db.users.update({
-             where: {
-               id: {
-                 $eq: identifier
-               },
-                  about: about,
-                  photo: photo,
-                  location: location
-             }
-}).then(user => {
-      res.json({ user });
-      });
-            
 });
 
 export default router;
